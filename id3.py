@@ -1,3 +1,4 @@
+import streamlit as st
 import numpy as np
 import pandas as pd
 
@@ -55,22 +56,35 @@ def classify(root, sample):
         return None
     return classify(root.children[value], sample)
 
-# Sample data
-data = pd.DataFrame({
-    'Outlook': ['Sunny', 'Sunny', 'Overcast', 'Rainy', 'Rainy', 'Rainy', 'Overcast', 'Sunny', 'Sunny', 'Rainy'],
-    'Temperature': ['Hot', 'Hot', 'Hot', 'Mild', 'Cool', 'Cool', 'Cool', 'Mild', 'Cool', 'Mild'],
-    'Humidity': ['High', 'High', 'High', 'High', 'Normal', 'Normal', 'Normal', 'High', 'Normal', 'Normal'],
-    'Wind': ['Weak', 'Strong', 'Weak', 'Weak', 'Weak', 'Strong', 'Strong', 'Weak', 'Weak', 'Weak'],
-    'PlayTennis': ['No', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No', 'Yes', 'Yes']
-})
+def main():
+    st.title("Decision Tree Classifier with ID3 Algorithm")
+    
+    # Sample data
+    data = pd.DataFrame({
+        'Outlook': ['Sunny', 'Sunny', 'Overcast', 'Rainy', 'Rainy', 'Rainy', 'Overcast', 'Sunny', 'Sunny', 'Rainy'],
+        'Temperature': ['Hot', 'Hot', 'Hot', 'Mild', 'Cool', 'Cool', 'Cool', 'Mild', 'Cool', 'Mild'],
+        'Humidity': ['High', 'High', 'High', 'High', 'Normal', 'Normal', 'Normal', 'High', 'Normal', 'Normal'],
+        'Wind': ['Weak', 'Strong', 'Weak', 'Weak', 'Weak', 'Strong', 'Strong', 'Weak', 'Weak', 'Weak'],
+        'PlayTennis': ['No', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No', 'Yes', 'Yes']
+    })
 
-labels = data['PlayTennis']
-features = data.columns[:-1]
+    labels = data['PlayTennis']
+    features = data.columns[:-1]
 
-# Build the decision tree
-root = build_tree(data, labels, features)
+    # Build the decision tree
+    root = build_tree(data, labels, features)
 
-# Classify a new sample
-sample = {'Outlook': 'Sunny', 'Temperature': 'Cool', 'Humidity': 'High', 'Wind': 'Strong'}
-classification = classify(root, sample)
-print("Predicted class:", classification)
+    # Collect input from user
+    st.sidebar.header("Input")
+    sample = {}
+    for feature in features:
+        sample[feature] = st.sidebar.selectbox(feature, data[feature].unique())
+
+    # Classify the input sample
+    classification = classify(root, sample)
+
+    # Display the result
+    st.write("Predicted class:", classification)
+
+if __name__ == "__main__":
+    main()
