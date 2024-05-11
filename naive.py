@@ -1,7 +1,6 @@
 # Import necessary libraries
 import pandas as pd
 import streamlit as st
-from sklearn import tree
 from sklearn.preprocessing import LabelEncoder
 from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
