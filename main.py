@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 # Loading Data from a CSV File
-data = pd.DataFrame(data=pd.read_csv('trainingdata.csv'))
+data = pd.DataFrame(data=pd.read_csv('trainingdata(1).csv'))
 print(data)
 
 # Separating concept features from Target
