@@ -23,15 +23,14 @@ def preprocess_data(X, y):
     return X_train_tfidf, X_test_tfidf, y_train, y_test, vectorizer
 
 # Train model
-@st.cache_data
-def train_model(X_train_tfidf, y_train):
+def train_model(_X_train_tfidf, y_train):
     model = MultinomialNB()
-    model.fit(X_train_tfidf, y_train)
+    model.fit(_X_train_tfidf, y_train)
     return model
 
 # Evaluate model
-def evaluate_model(model, X_test_tfidf, y_test):
-    y_pred = model.predict(X_test_tfidf)
+def evaluate_model(model, _X_test_tfidf, y_test):
+    y_pred = model.predict(_X_test_tfidf)
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred, average='weighted')
     recall = recall_score(y_test, y_pred, average='weighted')
